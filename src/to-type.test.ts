@@ -31,7 +31,7 @@ describe('toType', () => {
     const Person = t.exact(
       t.type({
         name: t.string,
-      })
+      }),
     );
     expect(type(Person, ['name'])).toBe(t.string);
   });

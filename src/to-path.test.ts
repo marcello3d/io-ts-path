@@ -43,14 +43,16 @@ describe('path', () => {
   });
 
   it('works on exact type', () => {
-    const Person = t.exact(t.type({
-      name: t.string,
-      age: t.number,
-      fullName: t.type({
-        first: t.string,
-        last: t.string,
+    const Person = t.exact(
+      t.type({
+        name: t.string,
+        age: t.number,
+        fullName: t.type({
+          first: t.string,
+          last: t.string,
+        }),
       }),
-    }));
+    );
     expect(path(query(Person).name)).toEqual(['name']);
     expect(path(query(Person).fullName.first)).toEqual(['fullName', 'first']);
   });

@@ -1,7 +1,8 @@
 import {
   Any,
   ArrayType,
-  DictionaryType, ExactType,
+  DictionaryType,
+  ExactType,
   InterfaceType,
   PartialType,
   ReadonlyArrayType,
@@ -24,7 +25,10 @@ export function type(baseType: Any, path: Path): Any {
         throw new PathError('Expected string', path, i);
       }
       baseType = baseType.props[pathElement];
-    } else if (baseType instanceof ArrayType || baseType instanceof ReadonlyArrayType) {
+    } else if (
+      baseType instanceof ArrayType ||
+      baseType instanceof ReadonlyArrayType
+    ) {
       if (typeof pathElement === 'string') {
         throw new PathError('Expected number or Wildcard', path, i);
       }
@@ -35,7 +39,11 @@ export function type(baseType: Any, path: Path): Any {
       }
       baseType = baseType.codomain;
     } else {
-      throw new PathError(`Type [${baseType.name}] cannot be inspected`, path, i);
+      throw new PathError(
+        `Type [${baseType.name}] cannot be inspected`,
+        path,
+        i,
+      );
     }
   }
   return baseType;

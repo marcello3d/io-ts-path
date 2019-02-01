@@ -9,7 +9,7 @@
     "test": "jest --watch",
     "test-ci": "jest --coverage",
     "build": "rollup -c",
-    "lint": "tslint -c tslint.json src/**/*.ts",
+    "lint": "tslint -c tslint.json src/**/*.ts && prettier --list-different src/**",
     "prepublishOnly": "rm -rf dist/ && npm run build"
   },
   "engines": {
@@ -48,6 +48,7 @@
     "io-ts": "1.6.3",
     "jest": "23.6.0",
     "prettier": "1.15.3",
+    "prettylint": "1.0.0",
     "rollup": "1.1.0",
     "rollup-plugin-commonjs": "9.2.0",
     "rollup-plugin-node-resolve": "4.0.0",
