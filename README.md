@@ -5,7 +5,9 @@
 
 Generate type-safe paths from [io-ts](https://github.com/gcanti/io-ts) models.
 
-Basic usage:
+## Basic usage
+
+### Type-safe path from io-ts type
 ```typescript
 import * as t from 'io-ts';
 import { query, path } from 'io-ts-path';
@@ -44,4 +46,48 @@ const Model = t.type({
 
 path(query(Model).users._.books)
 // => ['users', WildCard, 'books']
+```
+
+### io-ts type from path
+
+```typescript
+import * as t from 'io-ts';
+import { type } from 'io-ts-path';
+
+const Person = t.type({
+  name: t.string,
+  age: t.number,
+  fullName: t.type({
+    first: t.string,
+    last: t.string
+  })
+});
+
+type(Person, ['age'])
+// => t.number
+
+type(Person, ['fullName', 'first'])
+// => t.string
+
+type(Person, ['foo'])
+// => throws PathError
+```
+
+```typescript
+import * as t from 'io-ts';
+import { type, WildCard } from 'io-ts-path';
+
+const Model = t.type({
+  users: t.dictionary(
+    t.string,
+    t.type({
+      name: t.string,
+      age: t.number,
+      books: t.array(t.string),
+    }),
+  ),
+});
+
+type(Model, ['users', WildCard, 'books'])
+// => t.array(t.string)
 ```
