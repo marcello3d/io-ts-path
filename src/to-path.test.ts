@@ -1,5 +1,6 @@
 import * as t from 'io-ts';
-import { path, query, WildCard } from '.';
+import { WildCard } from './path';
+import { path, query } from './to-path';
 
 describe('path', () => {
   it('works on basic type', () => {
@@ -11,6 +12,45 @@ describe('path', () => {
         last: t.string,
       }),
     });
+    expect(path(query(Person).name)).toEqual(['name']);
+    expect(path(query(Person).fullName.first)).toEqual(['fullName', 'first']);
+  });
+
+  it('works on partial type', () => {
+    const Person = t.partial({
+      name: t.string,
+      age: t.number,
+      fullName: t.type({
+        first: t.string,
+        last: t.string,
+      }),
+    });
+    expect(path(query(Person).name)).toEqual(['name']);
+    expect(path(query(Person).fullName.first)).toEqual(['fullName', 'first']);
+  });
+
+  it('works on strict type', () => {
+    const Person = t.strict({
+      name: t.string,
+      age: t.number,
+      fullName: t.type({
+        first: t.string,
+        last: t.string,
+      }),
+    });
+    expect(path(query(Person).name)).toEqual(['name']);
+    expect(path(query(Person).fullName.first)).toEqual(['fullName', 'first']);
+  });
+
+  it('works on exact type', () => {
+    const Person = t.exact(t.type({
+      name: t.string,
+      age: t.number,
+      fullName: t.type({
+        first: t.string,
+        last: t.string,
+      }),
+    }));
     expect(path(query(Person).name)).toEqual(['name']);
     expect(path(query(Person).fullName.first)).toEqual(['fullName', 'first']);
   });
