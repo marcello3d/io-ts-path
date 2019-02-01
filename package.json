@@ -1,9 +1,9 @@
 {
   "name": "io-ts-path",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "type-safe paths for io-ts models",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.esm.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
     "test": "jest --watch",
